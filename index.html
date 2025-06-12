@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Game Project for Micro IT</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>Quiz Game</h1>
+    <div class="question" id="question"></div>
+    <div class="options" id="options"></div>
+    <button id="nextBtn" onclick="nextQuestion()">Next</button>
+    <div id="result"></div>
+</div>
+
+<script>
+    const quizData = [
+        {
+            question: "1.Which entrance exam is widely accepted for admission into engineering colleges in India?",
+            options: ["A.CAT", "B.JEE", "C.EAPCET", "D.BOTH B&C"],
+            answer: "D.BOTH B&C"
+        },
+        {
+            question: "2.What does 'CAD' stand for in engineering?",
+            options: ["Computer Algebra Designx", "Computer-Aided Design", "Calculated Analysis Device", "Circuit Analysis Diagram"],
+            answer: "Computer-Aided Design"
+        },
+        {
+            question: "3.What does 'CGPA' stand for?",
+            options: [" Current Grade Point Assessmen", " Central Grade Point Average", "Cumulative Grade Point Average", "College Grade Performance Analysis"],
+            answer: "Cumulative Grade Point Average"
+        },
+        {
+            question: "4.Who won the ICC Cricket World Cup 2019?",
+            options: ["Australia","England", "India","New Zealand"],
+            answer: "England"
+        },
+        {
+            question: "5.Which country has won the most ICC Cricket World Cups (as of 2025)?",
+            options: ["Australia", "India", " West Indies", "England"],
+            answer: "Australia"
+        },
+        {
+            question: "6.Which cricketer is known as the 'Little Master'?",
+            options: [" Ricky Ponting", "Virat Kohli", "Sachin Tendulkar", "Brian Lara"],
+            answer: "Sachin Tendulkar"
+        },
+        {
+            question: "7.Who was the first cricketer to score a double century in ODIs?",
+            options: ["Rohit Sharma", "Virender Sehwag", "Martin Guptill", "Sachin Tendulkar"],
+            answer: "Sachin Tendulkar"
+        },
+        {
+            question: "8.Who is known for the fastest century in T20 International cricket (as of 2025)?",
+            options: ["David Miller", "Rohit Sharma", "Kushal Malla", "Chris Gayle"],
+            answer: "Kushal Malla"
+        },
+        {
+            question: "9.Which trophy is contested between India and Australia in Test cricket?",
+            options: ["Ashes Trophy", "Border-Gavaskar Trophy", "Champions Trophy", "Asia Cup"],
+            answer: "Border-Gavaskar Trophy"
+        },
+        {
+            question: "10.In which country is the Melbourne Cricket Ground located?",
+            options: ["South Africa", "India", "New Zealand", "Australia"],
+            answer: "Australia"
+        },
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+
+    function loadQuestion() {
+        document.getElementById("result").innerHTML = "";
+        const q = quizData[currentQuestion];
+        document.getElementById("question").innerText = q.question;
+
+        const optionsDiv = document.getElementById("options");
+        optionsDiv.innerHTML = "";
+        q.options.forEach(option => {
+            const btn = document.createElement("div");
+            btn.classList.add("option");
+            btn.innerText = option;
+            btn.onclick = () => selectAnswer(option);
+            optionsDiv.appendChild(btn);
+        });
+    }
+
+    function selectAnswer(selectedOption) {
+        const correctAnswer = quizData[currentQuestion].answer;
+        if (selectedOption === correctAnswer) {
+            score++;
+            document.getElementById("result").innerText = "Correct!";
+            document.getElementById("result").style.color = "green";
+        } else {
+            document.getElementById("result").innerText = `Wrong! Correct answer: ${correctAnswer}`;
+            document.getElementById("result").style.color = "red";
+        }
+    }
+
+    function nextQuestion() {
+        if (currentQuestion < quizData.length - 1) {
+            currentQuestion++;
+            loadQuestion();
+        } else {
+            showScore();
+        }
+    }
+
+    function showScore() {
+        document.getElementById("question").innerText = "Quiz Finished!";
+        document.getElementById("options").innerHTML = "";
+        document.getElementById("nextBtn").style.display = "none";
+        document.getElementById("result").innerText = `Your Score: ${score} / ${quizData.length}`;
+        document.getElementById("result").style.color = "blue";
+    }
+
+    loadQuestion();
+</script>
+
+</body>
+</html>
